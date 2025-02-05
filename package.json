@@ -1,0 +1,44 @@
+{
+  "name": "learnflow-ai-backend",
+  "version": "1.0.0",
+  "description": "Backend for the Learning Dashboard. Node.js/Express.js API with TypeScript, Prisma ORM, and MySQL. Handles user authentication (JWT), AI-driven resource recommendations, and progress tracking. Includes RESTful endpoints for goals, resources, and user analytics.",
+  "homepage": "https://github.com/gayanukabulegoda/LearnFlow-AI-BACKEND#readme",
+  "bugs": {
+    "url": "https://github.com/gayanukabulegoda/LearnFlow-AI-BACKEND/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gayanukabulegoda/LearnFlow-AI-BACKEND.git"
+  },
+  "license": "MIT",
+  "author": "Gayanuka Buelgoda",
+  "type": "commonjs",
+  "main": "server.ts",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "start": "nodemon server.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "prisma": {
+    "schema": "src/prisma/schema.prisma"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/jsonwebtoken": "^9.0.8",
+    "@types/node": "^22.13.1",
+    "prisma": "^6.3.1",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.7.3"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.3.1",
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2"
+  }
+}
