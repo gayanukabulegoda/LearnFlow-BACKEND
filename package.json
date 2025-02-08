@@ -18,27 +18,40 @@
     "test": "tests"
   },
   "scripts": {
-    "start": "nodemon server.ts",
+    "start": "nodemon src/server.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "prisma": {
     "schema": "src/prisma/schema.prisma"
   },
   "devDependencies": {
+    "@prisma/client": "^6.3.1",
     "@types/bcrypt": "^5.0.2",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/cookie-parser": "^1.4.8",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/jsonwebtoken": "^9.0.8",
+    "@types/morgan": "^1.9.9",
+    "@types/natural": "^5.1.5",
     "@types/node": "^22.13.1",
     "prisma": "^6.3.1",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.7.3"
   },
   "dependencies": {
-    "@prisma/client": "^6.3.1",
     "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
+    "compromise": "^14.14.4",
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "envalid": "^8.0.0",
     "express": "^4.21.2",
-    "jsonwebtoken": "^9.0.2"
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0",
+    "natural": "^8.0.1",
+    "winston-daily-rotate-file": "^5.0.0",
+    "zod": "^3.24.1"
   }
 }
