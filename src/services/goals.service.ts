@@ -29,7 +29,7 @@ export const createGoal = async (
 export const getUserGoals = async (userId: number): Promise<LearningGoal[]> => {
     try {
         return await prisma.learningGoal.findMany({
-            where: {userId},
+            where: {userId, status: {not: 'DELETED'}},
             orderBy: {createdAt: 'desc'}
         });
     } catch (error) {
@@ -61,8 +61,9 @@ export const updateUserGoal = async (
 
 export const deleteUserGoal = async (userId: number, goalId: number): Promise<void> => {
     try {
-        await prisma.learningGoal.delete({
-            where: {id: goalId, userId}
+        await prisma.learningGoal.update({
+            where: { id: goalId, userId },
+            data: { status: 'DELETED' }
         });
     } catch (error) {
         logger.error('Goal deletion failed:', error);

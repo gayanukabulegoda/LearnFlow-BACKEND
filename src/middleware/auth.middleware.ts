@@ -22,16 +22,16 @@ export const auth = async (
     next: NextFunction
 ): Promise<void> => {
     try {
-        const token = req.cookies.token;
-        if (!token) {
+        const accessToken = req.cookies.accessToken;
+        if (!accessToken) {
             res.status(401).json({success: false, message: 'Authentication required'});
             return;
         }
 
-        const decoded = jwt.verify(token, config.JWT_SECRET) as { id: number };
+        const decoded = jwt.verify(accessToken, config.JWT_SECRET) as { id: number };
         const user = await prisma.user.findUnique({
             where: {id: decoded.id},
-            select: {id: true, email: true, name: true}
+            select: {id: true, email: true, name: true, refreshToken: true}
         });
 
         if (!user) {
@@ -39,9 +39,18 @@ export const auth = async (
             return;
         }
 
-        req.user = user;
+        req.user = {id: user.id, email: user.email, name: user.name};
         next();
     } catch (error) {
+        if (error instanceof jwt.TokenExpiredError) {
+            res.status(401).json({
+                success: false,
+                message: 'Token expired',
+                code: 'TOKEN_EXPIRED'
+            });
+            return;
+        }
+
         logger.error('Authentication error:', error);
         const message = error instanceof jwt.JsonWebTokenError
             ? 'Invalid token'

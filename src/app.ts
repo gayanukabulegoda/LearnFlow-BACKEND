@@ -4,8 +4,8 @@ import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 import {config} from './config';
 import authRoutes from './routes/auth.routes';
-import goalsRoutes from './routes/goals.routes';
-import resourcesRoutes from './routes/resources.routes';
+import goalsRoutes from './routes/goal.routes';
+import resourcesRoutes from './routes/resource.routes';
 import {errorHandler} from './middleware/error.middleware';
 import {notFoundHandler} from './middleware/not-found.middleware';
 
@@ -26,12 +26,12 @@ app.get('/api/health', (req, res) => {
 });
 
 // API routes
-app.use('/api/auth', authRoutes);
-app.use('/api/goals', goalsRoutes);
-app.use('/api/resources', resourcesRoutes);
+app.use(`/api/${config.CURRENT_API_VERSION}/auth`, authRoutes);
+app.use(`/api/${config.CURRENT_API_VERSION}/goals`, goalsRoutes);
+app.use(`/api/${config.CURRENT_API_VERSION}/resources`, resourcesRoutes);
 
 // Error handling
 app.use(notFoundHandler);
-// app.use(errorHandler);
+app.use(errorHandler);
 
 export default app;

@@ -1,6 +1,5 @@
 generator client {
   provider = "prisma-client-js"
-  output   = "../prisma-client"
 }
 
 datasource db {
@@ -13,6 +12,7 @@ model User {
   email           String                   @unique @db.VarChar(255)
   password        String                   @db.VarChar(255)
   name            String?                  @db.VarChar(100)
+  refreshToken    String?                  @db.VarChar(512)
   goals           LearningGoal[]
   progressLogs    ProgressLog[]
   recommendations ResourceRecommendation[]
@@ -87,6 +87,7 @@ enum GoalStatus {
   ACTIVE
   COMPLETED
   ARCHIVED
+  DELETED
 }
 
 enum ResourceType {
