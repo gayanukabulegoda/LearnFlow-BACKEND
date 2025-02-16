@@ -1,8 +1,13 @@
 import {createLogger, format, transports} from 'winston';
-import {config} from '../config';
+import {config} from '../config/config';
 import DailyRotateFile from 'winston-daily-rotate-file';
 import path from 'path';
-
+/**
+ * @description Custom logger configuration with file and console transports
+ * @requires winston-daily-rotate-file - Winston transport for daily log rotation
+ * @requires path - Node.js path module
+ * @exports logger - Winston logger instance for logging
+ */
 const {combine, timestamp, printf, colorize} = format;
 
 // Custom log format
@@ -45,12 +50,5 @@ const logger = createLogger({
         new transports.File({filename: 'logs/rejections.log'})
     ]
 });
-
-// Morgan stream integration
-export const morganStream = {
-    write: (message: string) => {
-        logger.info(message.trim());
-    }
-};
 
 export default logger;

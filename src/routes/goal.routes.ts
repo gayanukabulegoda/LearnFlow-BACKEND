@@ -13,7 +13,10 @@ import {
     progressSchema
 } from '../validations/goal.schema';
 import {validate} from '../middleware/validate.middleware';
-
+/**
+ * @description Router for /goals routes
+ * @returns {Router} Express Router
+ */
 const router = Router();
 
 router.use(auth);

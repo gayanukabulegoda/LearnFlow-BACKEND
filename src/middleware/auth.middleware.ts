@@ -2,8 +2,14 @@ import {Request, Response, NextFunction} from 'express';
 import jwt from 'jsonwebtoken';
 import prisma from '../../src/prisma/prisma-client';
 import logger from '../utils/logger';
-import {config} from '../config';
-
+import {config} from '../config/config';
+/**
+ * @description Middleware to authenticate user requests
+ * @param req - Request object
+ * @param res - Response object
+ * @param next - Next function
+ * declare global {} is required to extend the Request interface to access user property in req
+ */
 declare global {
     namespace Express {
         interface Request {

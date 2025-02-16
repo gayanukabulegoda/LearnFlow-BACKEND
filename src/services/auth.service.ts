@@ -1,11 +1,16 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import {config} from '../config';
+import {config} from '../config/config';
 import prisma from '../../src/prisma/prisma-client';
 import {User} from '@prisma/client';
 import {v4 as uuidv4} from 'uuid';
 import logger from '../utils/logger';
-
+/**
+ * @description Generate access and refresh tokens for the user & Manage user registration and login
+ * @param userId
+ * @returns Access and refresh tokens & Set refresh token in the database
+ * @returns Current user details
+ */
 export const generateTokens = (userId: number) => {
     const accessToken = jwt.sign(
         {id: userId},

@@ -1,8 +1,17 @@
 import app from './app';
 import {createServer} from 'http';
 import logger from './utils/logger';
-import {config} from './config';
-
+import {config} from './config/config';
+/**
+ * -------------------------------------------------------------------
+ * Author: Gayanuka Bulegoda
+ * GitHub: https://github.com/gayanukabulegoda
+ * Website: https://grbulegoda.me
+ * -------------------------------------------------------------------
+ * Created: 04-02-2025 18:32 PM
+ * Project: LearnFlow BACKEND
+ * -------------------------------------------------------------------
+ */
 const port = config.PORT || 5000;
 const server = createServer(app);
 

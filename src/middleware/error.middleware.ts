@@ -4,7 +4,13 @@ import {Prisma} from '@prisma/client';
 import {ErrorRequestHandler} from 'express-serve-static-core';
 import logger from '../utils/logger';
 import {CustomError} from '../errors/custom-error';
-
+/**
+ * @description Middleware to catch and handle errors
+ * @param err - Error object
+ * @param req - Request object
+ * @param res - Response object
+ * @param next - Next function
+ */
 export const errorHandler: ErrorRequestHandler = (
     err: Error,
     req: Request,

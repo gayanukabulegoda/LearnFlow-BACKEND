@@ -1,8 +1,12 @@
 import {Request, Response} from 'express';
-import {config} from '../config';
+import {config} from '../config/config';
 import prisma from "../prisma/prisma-client";
 import * as authService from '../services/auth.service';
-
+/**
+ * @description API endpoints for user authentication
+ * @param req - Request object
+ * @param res - Response object
+ */
 const registerUser = async (req: Request, res: Response): Promise<void> => {
     try {
         const {user, refreshToken} = await authService.registerUser(
@@ -62,10 +66,6 @@ const loginUser = async (req: Request, res: Response): Promise<void> => {
         res.status(200).json({
             success: true,
             data: user,
-            // tokens: {
-            //     accessToken,
-            //     refreshToken
-            // }
         });
     } catch (error) {
         res.status(401).json({

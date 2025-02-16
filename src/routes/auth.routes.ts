@@ -9,13 +9,16 @@ import {
     refreshAccessToken
 } from '../controllers/auth.controller';
 import {auth} from '../middleware/auth.middleware';
-
+/**
+ * @description Router for /auth routes
+ * @returns {Router} Express Router
+ */
 const router = Router();
 
 router.post('/register', validate(registerSchema), registerUser);
 router.post('/login', validate(loginSchema), loginUser);
 router.get('/me', auth, getCurrentUser);
 router.post('/logout', auth, logoutUser);
-router.post('/refresh', auth, refreshAccessToken);
+router.post('/refresh', refreshAccessToken);
 
 export default router;

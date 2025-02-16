@@ -3,7 +3,12 @@ import natural from 'natural';
 import compromise from 'compromise';
 import {ResourceType} from '@prisma/client';
 import logger from '../utils/logger';
-
+/**
+ * @description Analyze learning goal and provide AI recommendations
+ * @param goal - Learning goal object with title and description
+ * @returns List of AI recommendations with title, URL, type, description, reason, and AI score
+ * @exports analyzeLearningGoal
+ */
 const WIKI_API_ENDPOINT = 'https://en.wikipedia.org/w/api.php';
 const MDN_SEARCH_API = 'https://developer.mozilla.org/api/v1/search';
 

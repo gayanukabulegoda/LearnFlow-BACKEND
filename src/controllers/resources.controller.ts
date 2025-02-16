@@ -1,6 +1,10 @@
 import {Request, Response} from 'express';
 import * as resourceService from '../services/resources.service';
-
+/**
+ * @description API endpoint to manage resource recommendations & interactions
+ * @param req - Request object
+ * @param res - Response object
+ */
 const getRecommendations = async (req: Request, res: Response): Promise<void> => {
     try {
         if (!req.user) {

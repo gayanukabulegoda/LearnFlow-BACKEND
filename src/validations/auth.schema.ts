@@ -1,5 +1,9 @@
 import {z} from 'zod';
-
+/**
+ * @description Zod schema for user registration & login
+ * @property {object} body - Object containing user registration & login schema
+ * @returns {z.ZodObject} - Zod object schema for user registration & login
+ */
 export const registerSchema = z.object({
     body: z.object({
         email: z.string().email('Invalid email format'),
@@ -18,8 +22,3 @@ export const loginSchema = z.object({
         password: z.string().min(1, 'Password is required')
     })
 });
-
-export type AuthSchema = {
-    register: typeof registerSchema,
-    login: typeof loginSchema
-};

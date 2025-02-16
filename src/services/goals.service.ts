@@ -1,7 +1,12 @@
 import prisma from '../../src/prisma/prisma-client';
 import {LearningGoal, GoalStatus} from '@prisma/client';
 import logger from '../utils/logger';
-
+/**
+ * @description Manage learning goals for a user
+ * @description Log progress and fetch progress history for a goal
+ * @param userId
+ * @param data - Goal details
+ */
 export const createGoal = async (
     userId: number,
     data: {
@@ -28,6 +33,23 @@ export const createGoal = async (
 
 export const getUserGoals = async (userId: number): Promise<LearningGoal[]> => {
     try {
+        // if, use status equal completed, update the learning progress to 100
+        const goals = await prisma.learningGoal.findMany({
+            where: {userId, status: {not: 'DELETED'}},
+            orderBy: {createdAt: 'desc'}
+        });
+
+        if (goals) {
+            for (const goal of goals) {
+                if (goal.status === 'COMPLETED') {
+                    await prisma.learningGoal.update({
+                        where: {id: goal.id},
+                        data: {progress: 100}
+                    });
+                }
+            }
+        }
+
         return await prisma.learningGoal.findMany({
             where: {userId, status: {not: 'DELETED'}},
             orderBy: {createdAt: 'desc'}
@@ -62,8 +84,8 @@ export const updateUserGoal = async (
 export const deleteUserGoal = async (userId: number, goalId: number): Promise<void> => {
     try {
         await prisma.learningGoal.update({
-            where: { id: goalId, userId },
-            data: { status: 'DELETED' }
+            where: {id: goalId, userId},
+            data: {status: 'DELETED'}
         });
     } catch (error) {
         logger.error('Goal deletion failed:', error);

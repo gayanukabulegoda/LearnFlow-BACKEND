@@ -1,6 +1,10 @@
 import {Request, Response} from 'express';
 import * as goalService from '../services/goals.service';
-
+/**
+ * @description API endpoints for managing learning goals
+ * @param req - Request object
+ * @param res - Response object
+ */
 const createGoal = async (req: Request, res: Response): Promise<void> => {
     try {
         if (!req.user) {

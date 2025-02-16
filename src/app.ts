@@ -2,13 +2,16 @@ import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
-import {config} from './config';
+import {config} from './config/config';
 import authRoutes from './routes/auth.routes';
 import goalsRoutes from './routes/goal.routes';
 import resourcesRoutes from './routes/resource.routes';
 import {errorHandler} from './middleware/error.middleware';
 import {notFoundHandler} from './middleware/not-found.middleware';
-
+/**
+ * @description Main Express application instance with middleware pipeline
+ * @returns {Express} Express application instance
+ */
 const app = express();
 
 // Middleware pipeline

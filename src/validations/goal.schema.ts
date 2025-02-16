@@ -1,5 +1,9 @@
 import {z} from 'zod';
-
+/**
+ * @description Zod schema for goal management & goal progress tracking
+ * @property {body} - Object containing goal data or progress data
+ * @returns {z.ZodObject} Zod schema object
+ */
 const GoalStatus = z.enum(['ACTIVE', 'COMPLETED', 'ARCHIVED']);
 const MAX_DESCRIPTION = 500;
 
@@ -27,9 +31,3 @@ export const progressSchema = z.object({
         duration: z.number().int().positive('Invalid duration').optional()
     })
 });
-
-export type GoalSchema = {
-    create: typeof goalCreateSchema,
-    update: typeof goalUpdateSchema,
-    progress: typeof progressSchema
-};

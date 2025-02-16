@@ -1,16 +1,21 @@
 import prisma from '../../src/prisma/prisma-client';
-import {ResourceInteraction, ResourceRecommendation, ResourceType} from '@prisma/client';
+import {ResourceInteraction, ResourceRecommendation} from '@prisma/client';
 import logger from '../utils/logger';
 import {analyzeLearningGoal} from './ai.service';
 import compromise from "compromise";
-
+/**
+ * @description Generate resource recommendations for a user based on their learning goals
+ * @description Analyze learning goals to generate AI recommendations
+ * @description Track user interactions with the recommendations
+ * @param userId
+ * @returns Resource recommendations
+ */
 export const getUserRecommendations = async (
     userId: number
 ): Promise<ResourceRecommendation[]> => {
     try {
         const goals = await prisma.learningGoal.findMany({
             where: {userId, status: 'ACTIVE'},
-            take: 3
         });
 
         const recommendations = await Promise.all(
@@ -38,8 +43,8 @@ export const getUserRecommendations = async (
                 return dbRecommendations;
             })
         );
-
-        return recommendations.flat();
+        // Flatten (convert a 2D array into a 1D array) and reverse the recommendations
+        return recommendations.flat().reverse();
     } catch (error) {
         logger.error('Recommendation service error:', error);
         throw new Error('Failed to generate recommendations');
