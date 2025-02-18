@@ -1,0 +1,106 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              Int                      @id @default(autoincrement())
+  email           String                   @unique @db.VarChar(255)
+  password        String                   @db.VarChar(255)
+  name            String?                  @db.VarChar(100)
+  refreshToken    String?                  @db.VarChar(512)
+  goals           LearningGoal[]
+  progressLogs    ProgressLog[]
+  recommendations ResourceRecommendation[]
+  interactions    ResourceInteraction[]
+  createdAt       DateTime                 @default(now())
+  updatedAt       DateTime                 @updatedAt
+}
+
+model LearningGoal {
+  id              Int                      @id @default(autoincrement())
+  title           String                   @db.VarChar(255)
+  description     String?
+  status          GoalStatus               @default(ACTIVE)
+  startDate       DateTime
+  targetDate      DateTime?
+  progress        Float                    @default(0.0)
+  userId          Int
+  user            User                     @relation(fields: [userId], references: [id])
+  progressLogs    ProgressLog[]
+  recommendations ResourceRecommendation[]
+  createdAt       DateTime                 @default(now())
+  updatedAt       DateTime                 @updatedAt
+
+  @@index([userId])
+}
+
+model ResourceRecommendation {
+  id           Int                   @id @default(autoincrement())
+  title        String                @db.VarChar(255)
+  url          String                @db.VarChar(2048)
+  type         ResourceType
+  reason       String?               @db.Text
+  aiScore      Float?                @default(0.0)
+  userId       Int
+  goalId       Int
+  user         User                  @relation(fields: [userId], references: [id])
+  goal         LearningGoal          @relation(fields: [goalId], references: [id])
+  interactions ResourceInteraction[]
+  tags         String?               @db.VarChar(255)
+  createdAt    DateTime              @default(now())
+
+  @@index([userId, goalId])
+}
+
+model ProgressLog {
+  id        Int          @id @default(autoincrement())
+  date      DateTime
+  notes     String?      @db.Text
+  duration  Int? // in minutes
+  userId    Int
+  goalId    Int
+  user      User         @relation(fields: [userId], references: [id])
+  goal      LearningGoal @relation(fields: [goalId], references: [id])
+  createdAt DateTime     @default(now())
+
+  @@index([userId, goalId])
+}
+
+model ResourceInteraction {
+  id               Int                    @id @default(autoincrement())
+  type             InteractionType
+  recommendationId Int
+  recommendation   ResourceRecommendation @relation(fields: [recommendationId], references: [id])
+  userId           Int
+  user             User                   @relation(fields: [userId], references: [id])
+  createdAt        DateTime               @default(now())
+
+  @@index([recommendationId, userId])
+}
+
+enum GoalStatus {
+  ACTIVE
+  COMPLETED
+  ARCHIVED
+  DELETED
+}
+
+enum ResourceType {
+  ARTICLE
+  VIDEO
+  COURSE
+  DOCUMENTATION
+  PODCAST
+}
+
+enum InteractionType {
+  VIEW
+  BOOKMARK
+  COMPLETE
+  DISMISS
+}

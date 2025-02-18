@@ -1,0 +1,17 @@
+# Keep environment variables out of version control
+.env
+
+# Ignore node_modules
+node_modules
+
+# Ignore IDE files
+.idea
+
+# Ignore build files
+dist
+
+# Ignore package-lock.json
+package-lock.json
+
+# Logs
+logs
